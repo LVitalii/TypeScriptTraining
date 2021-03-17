@@ -1,8 +1,8 @@
 /* eslint-disable no-redeclare */
-import { Category } from "./enums";
+import { Category, City } from "./enums";
 import { ReferenceItem, RefBook, Shelf, UniversityLibrarian } from "./classes";
 import { Book, Logger, Person, Author, Librarian, C, Magazine } from './intefaces';
-import { purge, createCustomerID, createCustomer, getProperty, getBookByCategory, logCategorySearch, getBooksByCategoryPromise, logSearchResults } from './functions';
+import { purge, createCustomerID, createCustomer, getProperty, getBookByCategory, logCategorySearch, getBooksByCategoryPromise, logSearchResults, getCityMayor, getCityMayorPromise, printCityMayorAfterDelay } from './functions';
 import type { Library } from './classes';
 import { BookRequiredFields, UpdatedBook, СreateCustomerFunctionType } from "./types";
 
@@ -258,7 +258,26 @@ const inventory: Book[] = [
 // console.log('Finish');
 
 // Task 09.01
-console.log('Start');
-logSearchResults(Category.JavaScript);
-logSearchResults(Category.Software).catch(err => console.log(err));
-console.log('Finish');
+// console.log('Start');
+// logSearchResults(Category.JavaScript);
+// logSearchResults(Category.Software).catch(err => console.log(err));
+// console.log('Finish');
+
+// Home task
+// 1) Declare enum City for storing cities names:
+// Kyiv, Odesa, Lviv, Dnipro, Others
+// 2) Implement function getCityMayor() that returns Mayor of the city by the city name;
+// 3) Declare constant that gets result of getCityMayor() function. Write to console Mayor of Lviv.
+// 4) Declare variable with getCityMayor() function type. Write to console Mayor of Dnipro.
+// 5) Create promise that returns Mayor of the city by city name after timeout of 3 seconds. In case of city is not found return "City is not found". Call promise for Odesa city using then() for writing to console if mayor is found or error if it is not found.
+// 6) Create function with previous calling promise that takes city as an argument. Call the function for Odesa and Others cities.
+
+const mayorLviv = getCityMayor(City.Lviv);
+console.log(mayorLviv);
+let mayorDnipro: (city: City) => string;
+mayorDnipro = getCityMayor;
+console.log(mayorDnipro(City.Dnipro));
+
+getCityMayorPromise(City.Odesa).then(mayor => console.log(mayor)).catch(err => console.log(err));
+console.log(printCityMayorAfterDelay(City.Odesa));
+console.log(printCityMayorAfterDelay(City.Others));

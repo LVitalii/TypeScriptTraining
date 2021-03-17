@@ -1,5 +1,5 @@
 import { Book, LibMgrCallback } from './intefaces';
-import { Category } from './enums';
+import { Category, City } from './enums';
 import { BookProperties, BookOrUndefined } from './types';
 
 export function getAllBooks(): ReadonlyArray<Book> {
@@ -192,4 +192,31 @@ export function getBooksByCategoryPromise(category: Category): Promise<string[]>
 export async function logSearchResults(category: Category): Promise<void> {
     const titles = await getBooksByCategoryPromise(category);
     console.log(titles);
+}
+
+export function getCityMayor(city: City): string {
+    switch (city) {
+        case (City.Kyiv): return 'Klychko';
+        case (City.Dnipro): return 'Filatov';
+        case (City.Lviv): return 'Sadovyy';
+        case (City.Odesa): return 'Truhanov';
+        default: return null;
+    }
+}
+
+export function getCityMayorPromise(city: City): Promise<string> {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const mayor = getCityMayor(city);
+            if (mayor) {
+                resolve(mayor);
+            } else {
+                reject("City is not found");
+            }
+        }, 3000);
+    });
+}
+
+export function printCityMayorAfterDelay(city: City): void {
+    getCityMayorPromise(city).then(mayor => console.log(mayor)).catch(err => console.log(err));
 }
