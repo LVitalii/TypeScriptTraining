@@ -19,6 +19,7 @@ module.exports = {
     contentBase: './dist',
     open: true,
     hot: true,
+    port: 8081
   },
 
   // input
